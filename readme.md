@@ -152,7 +152,7 @@ Multiplayer
 
 ## Datastructure
 
-![Datastructure](Mastermind app-Data Architecture.jpg)
+![Mastermind app-Data Architecture](https://github.com/user-attachments/assets/fb09b345-73f7-4e28-8e72-cc51f91f76a2)
 
 ## Codestructure
 
