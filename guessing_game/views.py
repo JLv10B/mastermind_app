@@ -277,7 +277,7 @@ def single_player_room_view(request, pk):
     guess_count = previous_guesses.count()
     remaining_guesses = room.max_number_of_guesses - guess_count
     previous_guess_feeback = player_feedback(request.user, pk)
-    room_feedback =f'Please enter a {room.difficulty} digit number'
+    room_feedback =f'Please enter a {room.difficulty} digit number, digits must be 0-7'
 
     try:
         request.user.player_guess_set.filter(room_id=pk).get(exact_matches = room.difficulty)
@@ -312,7 +312,7 @@ def multiplayer_room_view(request, pk):
     guess_count = previous_guesses.count()
     remaining_guesses = room.max_number_of_guesses - guess_count
     previous_guess_feeback = player_feedback(request.user, pk)
-    room_feedback =f'Please enter a {difficulty} digit number'
+    room_feedback =f'Please enter a {difficulty} digit number, digits must be 0-7'
     participants_guess_count = room_participants_and_guess_count(pk)
 
     if len(participants_guess_count) > 1 and min(participants_guess_count.values()) > 0: # If there are >1 participants and each has at least 1 guess, check for a winner
