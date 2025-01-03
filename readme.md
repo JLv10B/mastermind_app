@@ -52,6 +52,8 @@
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
+    <li><a href="#datastructure">Datastructure</a></li>
+    <li><a href="#codestructure">Codestructure</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
   </ol>
 </details>
@@ -148,7 +150,95 @@ Multiplayer
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+## Datastructure
 
+![Datastructure](Mastermind app-Data Architecture.jpg)
+
+## Codestructure
+
+1. user_login(request):
+    * This function allows user to login
+    
+
+2. user_logout(request):
+    * This function allows users to log out.
+
+3. register_page(request):
+    * This function allows users to register a profile, then redirects them to the home page after logging in.
+
+4. random_pattern_generator(pattern_length):
+    * This function generates a random pattern using the random number generator API(https://www.random.org/clients/http/api/). The expected response from the API is a JSON object with nested dictionary. If the reponse is successful then we can return the master_code.
+    * example:
+        * Input: 
+            4
+        * Output:
+            '1234'
+
+5. validate_player_input(player_input, pattern_length):
+    * This function validates player input. Player input should only contain numbers and be the length determined by pattern_length. If the player's input is valid then return True else return False
+    * Example:
+        * Input:
+            player_input = '1123'
+        * Output:
+            True
+
+6. find_matching_and_exact_matches(player_guess, master_code):
+    * This function takes a player's guess and compares it to the master code. It returns 2 integers, the first representing the number of mastching numbers and the second is the amout of exact matches.
+    * Example:
+        * Input:
+            mastercode = '1234'
+            player_guess = '0204'
+        * Output:
+            2,2
+
+7. player_feedback(user, room_id):
+    * This function accepts a user object and room_id and returns a list of responses.
+    * Example:
+        * Input: 
+            <user1_obj>
+        * Output: 
+            ["Guess #1: 1234 || You guessed {x} correct number(s) and have {y} exact matche(s)", ...]
+
+8. create_room_score(request,pk):
+    * This function accepts a POST request and creates a new room_score object
+
+9. home_view(request):
+    * This view renders the home page with login/logout functions. The player can create a room with a room name and selected difficulty. After the room is created the player is redirected to the created room page. This view should include a form to create a room, a list of all current rooms, and a welcome message.
+
+10. generate_guess(request, pk):
+    * This function accepts a POST request and validates the player's input. If the player's input is not valid then it will return False and an error message. If the input is valid then the function will return True. If the input is valid the function creates a player_guess object and check if the player already has a Room_score object associated with them, if not it will be created.
+
+11. single_player_room_view(request, pk):
+    * This view renders a singleplayer room and manages the room.completed state. If the player has correctly guessed the master code or reached the maxium number of guesses, the room should be marked at completed. This view should render the all the previous guesses along with their appropriate feedback, guess count, form to allow the player to submit a guess, and room name.
+
+12. multiplayer_room_view(request, pk):
+    * This view renders a multiplayer room and manages when the game is completed. If the player has correctly guessed the master code or reached the maxium number of guesses, the points should be distributed to the correct players and room should be marked at completed, players will no longer be able to submit guesses. The view should include the all the previous guesses along with their appropriate feedback, guess count, form to allow the player to submit a guess, scoreboard, and room name.
+
+13. submit_guess_controller(request, pk):
+    * This function controls which logic is applied to guess submission requests. Passes the POST request and pk to single player and multiplayer submit guess functions.
+
+14. singe_player_submit_guess(request, pk):
+    * This function dictates the logic for when guesses are allowed to be submitted for single player rooms. Players are not able to submit a guess if the room has been marked completed or if they have no more remaining guesses. 
+
+15. multiplayer_submit_guess(request, pk):
+    * This function dictates the logic for when guesses are allowed to be submitted for multiplayer rooms. Players cannot submit guesses if they have 1 or more guesses than the player with the fewest guesses. Eg. A player should not be able to submit their 7th guess until everyone in the room has submitted their 6th guess. Accepts a POST request and passes it to the submit_guess function.
+
+16. room_participants_and_guess_count(room_id):
+    * This functions accepts the room id and returns a dictionary of all user object in the room and their guess counts {user:guess_count}.
+    * Example:
+        * Input: 1
+        * Output: {<user1_obj>:3, <user2_obj>:3, <user3_obj>:2}
+
+17. error_page_view(request, pk):
+    * This view renders an error page along with the appropriate message. Player should be able to return back to the room that they were in when the error occured.
+
+18. restart_game(request, pk):
+    * This function allows the player to restart the game with a new master code. It deletes all guesses linked to the room.
+
+19. delete_room(request, pk):
+    * This function allows users to delete rooms. If it is a single player room then the player can delete it at any time. If it's a multiplayer room then the room can only be deleted if the room status is set to completed.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- ROADMAP -->
 ## Roadmap
