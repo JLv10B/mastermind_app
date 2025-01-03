@@ -1,0 +1,32 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div>
+    <a href="{% url 'home' %}">Home</a>
+</div>
+<div>
+    <h1>Oops!</h1>
+</div>
+
+<div>
+    {% if request.user.is_authenticated %}
+    <div>
+        {{error_message}}
+    </div>
+
+        {% if room.player_count == 1 %}
+        <div>
+            <a href="{% url 'single-player-room' %}">Return to room</a>
+        </div>
+        {% endif %}
+        
+        {% if room.player_count > 1 %}
+        <div>
+            <a href="{% url 'multiplayer-room' %}">Return to room</a>
+        </div>
+        {% endif %}
+
+    {% endif %}
+</div>
+
+{% endblock %}

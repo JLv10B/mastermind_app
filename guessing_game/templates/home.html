@@ -1,0 +1,50 @@
+{% extends 'main.html' %}
+
+{% block content %}
+
+<div>
+    {% if request.user.is_authenticated %}
+    
+    <div>
+        <p>
+        {% for message in return_messages %}
+            {{message}}
+        {% endfor %}
+        </p>
+    </div>
+    <div>
+        <form method="POST" action="">
+            {% csrf_token %}
+            {{form.as_p}}
+            <input type="submit" value="Submit" />
+        </form>
+    </div>
+
+<h3>{{request.user}}'s Single Player Rooms</h3>
+    {% for room in user_single_rooms %}
+
+    <div>
+        <a href="{% url 'single-player-room' room.id %}">{{room.room_name}}</a>
+    </div>
+
+    {% endfor %}
+<br>
+<br>
+<h3>Multiplayer Rooms</h3>
+    {% for room in multiplayer_rooms %}
+
+    <div>
+        <a href="{% url 'multiplayer-room' room.id %}">{{room.room_name}}</a>
+    </div>
+
+    {% endfor %}
+
+    {% else %}
+
+    <div>
+        <p>Please login</p>
+    </div>
+
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,79 @@
+{% extends 'main.html' %}
+
+{% block content %}
+<div>
+    <a href="{% url 'home' %}">Home</a>
+</div>
+
+<div>
+    <h1>{{room.room_name}}</h1>
+</div>
+
+<div>
+    {% if request.user.is_authenticated %}
+    <div>
+        {% if room.completed == False %}
+
+        <h2>Guess the {{room.difficulty}} number pattern</h2>
+
+        {% else %}
+
+        <h2>Game Over</h2>
+
+        {% endif %}
+    </div>
+    <div>
+        {% for guess in previous_guess_feeback %}
+        <div>
+        {{guess}}
+        </div>
+        {% endfor %}
+    </div>
+    <div>
+        <br>
+        {{return_message}}
+    </div>
+
+    {% endif %}
+</div>
+
+<div>
+    <form method="POST" action="{%url 'submit-guess' room.id%}">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" value="Submit guess" />
+    </form>
+</div>
+<br>
+<div>
+    <form method="POST" action="{% url 'restart-game' room.id %}">
+        {% csrf_token %}
+        <input type="submit" value="Restart Game" />
+    </form>
+</div>
+<br>
+<div>
+    <form method="POST" action="{% url 'delete-room' room.id %}">
+        {% csrf_token %}
+        <input type="submit" value="Delete Room" />
+    </form>
+</div>
+
+
+
+<div>
+    <h2>Guesses remaining: {{remaining_guesses}}</h2>
+</div>
+
+<div>
+    {% if room.player_count > 1 %}
+    <div>
+        <h3>Score Board</h3>
+        {% for record in score_board %}
+        <p>{{record.user}}: {{record.score}}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}
