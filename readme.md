@@ -139,7 +139,6 @@ Multiplayer
 * Similar to single player gameplay but you cannot submit any guesses until there is another player in the room
 * The player that did not create the room must guess first to eliminate any unfair advantage
 * Each player must wait until each guessing round completes before entering their next guess
-* Players will not be able to get further ahead by guessing faster
 * Rounds can end with a winner, tie, or no winners
 * The player who guesses the master code in the fewest guesses is the winner and scores 2 points
 * If multiple players guess the master code in the same number of guesses then those players are tied and each player scores 1 point
