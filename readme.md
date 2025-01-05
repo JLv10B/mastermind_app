@@ -52,6 +52,7 @@
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
+    <li><a href="#process-flow-diagram">Process Flow Diagram</a></li>
     <li><a href="#datastructure">Datastructure</a></li>
     <li><a href="#codestructure">Codestructure</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
@@ -145,6 +146,12 @@ Multiplayer
 * If no player guesses the master code within 10 guesses, the round ends and no one gets any points
 * Rounds can be reset after they are completed, scores carry over to each round but not between rooms
 * Rooms can be deleted after any round is completed
+
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Process Flow Diagram
+
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
